@@ -4,7 +4,7 @@ export const data = {
   contact: {
     phone: "+91 7510780558",
     email: "rashaeshaal@gmail.com",
-    linkedin: "https://linkedin.com/in/rashaeshaal", // Placeholder if not provided
+    linkedin: "https://www.linkedin.com/in/rasha-e-9884a6262/", // Placeholder if not provided
     github: "https://github.com/rashaeshaal",
     location: "India"
   },
@@ -46,7 +46,7 @@ export const data = {
       title: "Spectra E-Commerce Website",
       tech: ["Python Django", "PostgreSQL", "HTML/CSS", "AWS EC2"],
       description: "Developed a comprehensive online platform for a spectacles shop with secure OTP-based authentication, custom admin panel, and Razorpay integration.",
-      link: "#" 
+      link: "#"
     },
     {
       title: "Job Portal Project",
