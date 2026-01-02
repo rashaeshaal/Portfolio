@@ -44,15 +44,37 @@ const Contact = () => {
                         </div>
                     </div>
 
-                    <form className="contact-form" onSubmit={(e) => e.preventDefault()}>
+                    <form
+                        className="contact-form"
+                        action="https://formspree.io/f/mykzwgyg"
+                        method="POST"
+                    >
                         <div className="form-group">
-                            <input type="text" placeholder="Your Name" className="form-input" />
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="Your Name"
+                                className="form-input"
+                                required
+                            />
                         </div>
                         <div className="form-group">
-                            <input type="email" placeholder="Your Email" className="form-input" />
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="Your Email"
+                                className="form-input"
+                                required
+                            />
                         </div>
                         <div className="form-group">
-                            <textarea placeholder="Your Message" rows="5" className="form-input"></textarea>
+                            <textarea
+                                name="message"
+                                placeholder="Your Message"
+                                rows="5"
+                                className="form-input"
+                                required
+                            ></textarea>
                         </div>
                         <button type="submit" className="btn btn-primary">Send Message</button>
                     </form>
