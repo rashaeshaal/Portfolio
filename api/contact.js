@@ -1,6 +1,10 @@
-const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
+    console.log('Contact API invoked');
+    console.log('Env USER:', process.env.EMAIL_USER);
+    console.log('Env PASS set:', !!process.env.EMAIL_PASS);
+
     if (req.method !== 'POST') {
         return res.status(405).json({ message: 'Method not allowed' });
     }
@@ -12,8 +16,10 @@ module.exports = async (req, res) => {
     }
 
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-        console.error('Missing env vars');
-        return res.status(500).json({ message: 'Server configuration error: Missing email credentials.' });
+        console.error('Missing email env vars');
+        return res
+            .status(500)
+            .json({ message: 'Server configuration error: Missing email credentials.' });
     }
 
     try {
@@ -25,7 +31,15 @@ module.exports = async (req, res) => {
             },
         });
 
-        await transporter.verify(); // Verify connection configuration
+        // Verify connection configuration (catch errors)
+        try {
+            await transporter.verify();
+        } catch (verifyErr) {
+            console.error('Transporter verify failed:', verifyErr);
+            return res
+                .status(500)
+                .json({ message: 'Email configuration verification failed', error: verifyErr.message });
+        }
 
         await transporter.sendMail({
             from: process.env.EMAIL_USER,
@@ -35,9 +49,9 @@ module.exports = async (req, res) => {
             text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
         });
 
-        res.status(200).json({ message: 'Email sent successfully' });
+        return res.status(200).json({ message: 'Email sent successfully' });
     } catch (error) {
-        console.error('Email error:', error);
-        res.status(500).json({ message: 'Error sending email', error: error.message });
+        console.error('Email sending error:', error);
+        return res.status(500).json({ message: 'Error sending email', error: error.message });
     }
-};
+}
