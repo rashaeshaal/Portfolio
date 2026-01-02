@@ -377,7 +377,7 @@ img {
   .section {
     padding: 60px 0;
   }
-  
+
   .section-title {
     font-size: 2rem;
     margin-bottom: 2rem;
@@ -390,18 +390,18 @@ img {
   .hero-title {
     font-size: 1.25rem;
   }
-  
+
   .hero-description {
     font-size: 1rem;
   }
-  
+
   .hero-buttons {
     flex-direction: column;
     gap: 15px;
     align-items: center;
     width: 100%;
   }
-  
+
   .btn {
     width: 100%;
     max-width: 280px;
@@ -412,11 +412,11 @@ img {
   .container {
     padding: 0 16px;
   }
-  
+
   .hero-name {
     font-size: 2rem;
   }
-  
+
   .profile-photo-container {
     width: 120px;
     height: 120px;
@@ -546,21 +546,23 @@ img {
   .timeline {
     padding-left: 20px;
   }
-  
+
   .timeline::before {
     left: 6px;
   }
-  
+
   .timeline-item::before {
-    left: -29px; /* Re-aligned visually */
+    left: -29px;
+    /* Re-aligned visually */
   }
-  
+
   .timeline-content {
     padding: 20px;
   }
-  
+
   .timeline-content::after {
-    display: none; /* Hide the arrow on mobile for simplicity, or adjust */
+    display: none;
+    /* Hide the arrow on mobile for simplicity, or adjust */
   }
 }
 
@@ -797,22 +799,23 @@ img {
   .contact-form {
     padding: 24px;
   }
-  
+
   .contact-info .section-title {
     text-align: center;
     left: 50%;
     transform: translateX(-50%);
   }
-  
+
   .contact-info .section-title::after {
     margin: 10px auto 0;
   }
-  
-  .contact-text, .contact-item {
+
+  .contact-text,
+  .contact-item {
     text-align: center;
     justify-content: center;
   }
-  
+
   .social-links {
     justify-content: center;
   }
@@ -866,7 +869,7 @@ img {
   .about-stats {
     gap: 30px;
   }
-  
+
   .stat-number {
     font-size: 2.5rem;
   }
@@ -883,4 +886,31 @@ img {
 .footer-text {
   color: var(--text-muted);
   font-size: 0.9rem;
+}
+
+/* Responsive tweaks for Experience timeline */
+@media (max-width: 768px) {
+  .timeline {
+    display: block;
+  }
+
+  .timeline-item {
+    margin-bottom: 30px;
+  }
+
+  .timeline-content {
+    padding: 12px;
+  }
+}
+
+/* Responsive tweaks for Projects grid */
+@media (max-width: 768px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .project-card {
+    margin-bottom: 20px;
+  }
 }
