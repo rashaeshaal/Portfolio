@@ -4,6 +4,46 @@ import { data } from '../data';
 import { FaPhone, FaEnvelope, FaLinkedin, FaGithub, FaMapMarkerAlt } from 'react-icons/fa';
 
 const Contact = () => {
+    const [formData, setFormData] = React.useState({
+        name: '',
+        email: '',
+        message: ''
+    });
+    const [status, setStatus] = React.useState('idle'); // idle, submitting, success, error
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setStatus('submitting');
+
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                setStatus('success');
+                setFormData({ name: '', email: '', message: '' });
+                setTimeout(() => setStatus('idle'), 3000);
+            } else {
+                throw new Error('Failed to send message');
+            }
+        } catch (error) {
+            setStatus('error');
+            setTimeout(() => setStatus('idle'), 3000);
+        }
+    };
+
     return (
         <section id="contact" className="section contact-section">
             <div className="container">
@@ -44,15 +84,13 @@ const Contact = () => {
                         </div>
                     </div>
 
-                    <form
-                        className="contact-form"
-                        action="https://formspree.io/f/mykzwgyg"
-                        method="POST"
-                    >
+                    <form className="contact-form" onSubmit={handleSubmit}>
                         <div className="form-group">
                             <input
                                 type="text"
                                 name="name"
+                                value={formData.name}
+                                onChange={handleChange}
                                 placeholder="Your Name"
                                 className="form-input"
                                 required
@@ -62,6 +100,8 @@ const Contact = () => {
                             <input
                                 type="email"
                                 name="email"
+                                value={formData.email}
+                                onChange={handleChange}
                                 placeholder="Your Email"
                                 className="form-input"
                                 required
@@ -70,16 +110,27 @@ const Contact = () => {
                         <div className="form-group">
                             <textarea
                                 name="message"
+                                value={formData.message}
+                                onChange={handleChange}
                                 placeholder="Your Message"
                                 rows="5"
                                 className="form-input"
                                 required
                             ></textarea>
                         </div>
-                        <button type="submit" className="btn btn-primary">Send Message</button>
+                        <button
+                            type="submit"
+                            className="btn btn-primary"
+                            disabled={status === 'submitting'}
+                        >
+                            {status === 'submitting' ? 'Sending...' :
+                                status === 'success' ? 'Message Sent!' :
+                                    status === 'error' ? 'Failed to Send' : 'Send Message'}
+                        </button>
                     </form>
                 </motion.div>
             </div>
+
         </section>
     );
 };
